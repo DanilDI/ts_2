@@ -1,26 +1,26 @@
 "use strict";
 class Calculator {
     constructor() {
+        this._onButtonClick = (e) => {
+            if (!(e.currentTarget instanceof Element)) {
+                return;
+            }
+            let p = e.currentTarget.querySelector("p");
+            let symb = p === null || p === void 0 ? void 0 : p.innerText;
+            if (symb) {
+                this._handleSymbol(symb);
+            }
+        };
         this._sign = "";
         this._currentExpr = "";
         this._result = "";
         let buttons = document.getElementsByClassName("btn-container__btn");
         for (let i = 0; i < buttons.length; ++i) {
-            buttons[i].addEventListener("click", (e) => this._onButtonClick(e));
+            buttons[i].addEventListener("click", this._onButtonClick);
         }
         this._resultView = document.getElementsByClassName("calc-app__result")[0];
         this._currentExprView = document.getElementsByClassName("calc-app__expr")[0];
         this._signView = document.getElementsByClassName("calc-app__sign")[0];
-    }
-    _onButtonClick(e) {
-        if (!(e.currentTarget instanceof Element)) {
-            return;
-        }
-        let p = e.currentTarget.querySelector("p");
-        let symb = p === null || p === void 0 ? void 0 : p.innerText;
-        if (symb) {
-            this._handleSymbol(symb);
-        }
     }
     _handleSymbol(s) {
         switch (s) {
